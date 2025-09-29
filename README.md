@@ -9,7 +9,7 @@ To track environmental parameters in the projection rooms, a sensor system was e
 
 Used technologies:
 - ASP.NET Core,
-- MVC (Model-View-Controller)
+- MVC Architecture (Model-View-Controller)
 - EF Core (Entity Framework Core)
 
 Used programs:
