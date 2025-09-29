@@ -1,4 +1,4 @@
-# CinemaWeb
+# CinemaWeb with IoT technology
 Student project
 
 The project aimed to develop a management and operation system for cinema halls, in which the administrator could control the schedule of screenings, add new movies, and view all users along with their tickets.
