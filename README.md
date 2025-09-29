@@ -8,7 +8,6 @@ A database was used to store the data, and this information was displayed in a w
 To track environmental parameters in the projection rooms, a sensor system was employed. It sent measurements to the database via an ESP32 microcontroller with built-in Wi-Fi communication.
 
 Used technologies:
-- ASP.NET,
 - ASP.NET Core,
 - MVC (Model-View-Controller)
 - EF Core (Entity Framework Core)
