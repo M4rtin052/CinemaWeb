@@ -9,7 +9,7 @@ obj/
 appsettings.Development.json
 
 # Arduino - sensors
-secret.h
+Czujniki/secret.h
 
 # SSMS
 *.mdf
