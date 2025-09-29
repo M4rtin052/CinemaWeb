@@ -20,11 +20,12 @@ https://github.com/milesburton/Arduino-Temperature-Control-Library/blob/master/L
 
 #include "secret.h"
 /*
-Należy usunąć "#include secret.h", oraz odkomentować, aby dostosować do swojej sieci
+Należy usunąć "#include secret.h",
+uzupełnić dane dla kolejno: ssid, password oraz serverSetup, a następnie je odkomentować
 
 const char* ssid = "NazwaSieci";
 const char* password = "HasłoDoSieci";
-const char* serverSetup = "http://192.168.x.x:5055/api/DataReceive"; // adres IPv4 komputera
+const char* serverSetup = "http://192.168.x.x:5055/api/DataReceive"; // adres IPv4 komputera (serwera)
 */
 
 // Utworzenie instancji 'oneWire' do komunikacji
