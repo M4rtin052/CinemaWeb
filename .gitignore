@@ -1,0 +1,17 @@
+# Visual Studio
+.vs/
+bin/
+obj/
+*.user
+*.suo
+
+# Connection string
+appsettings.Development.json
+
+# Arduino - sensors
+secret.h
+
+# SSMS
+*.mdf
+*.ldf
+*.db
