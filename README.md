@@ -11,7 +11,11 @@ Used technologies:
 - ASP.NET Core,
 - MVC (Model-View-Controller)
 - EF Core (Entity Framework Core)
+
+Used programs:
+- Visual Studio 2022
 - SSMS (Microsoft SQL Server Management Studio)
+- Arduino IDE
 
 Connection diagram of electronic components on the breadboard:
 
