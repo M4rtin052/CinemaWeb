@@ -1,0 +1,127 @@
+﻿@model CalendarTime
+
+@{
+    ViewData["Title"] = "Callendar";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+    background-image: linear-gradient(tan, white);
+    }
+
+    .month {
+    margin: auto;
+    font-weight: bold;
+    }
+
+    .dayName th {
+    display: inline-block;
+    width: 13%;
+    text-align: center;
+    margin: 2px;
+    font-size: 20px;
+    }
+
+    .day td {
+    display: inline-block;
+    width: 13%;
+    margin: 2px;
+    font-size: 18px;
+    color: #777;
+    }
+
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <form action="@Url.Action("ChangeMonth", "Callendar", new { id = Model.ShowingModel.FirstOrDefault().Film_Id })" method="post">
+
+        <div class="month d-flex justify-content-center border-top border-dark" style="background-color: burlywood;">
+            <button class="btn btn-outline-dark" type="submit" name="move" value="left">&#11164;</button> @* Unicode *@
+
+            <div class="col text-center">
+                <div class="text fs-4 align-self-stretch">@Model.DateTime.Last().ToString("yyyy")</div>
+                <div class="text fs-4">@Model.DateTime.Last().ToString("MMMM")</div>
+            </div>
+
+            <button class="btn btn-outline-dark" type="submit" name="move" value="right">&#11166;</button>
+        </div>
+
+        <table class="text-center border border-dark">
+            <tr class="dayName" style="background-color: tan;">
+                <th>Pon</th>
+                <th>Wt</th>
+                <th>Śr</th>
+                <th>Czw</th>
+                <th>Pt</th>
+                <th>Sob</th>
+                <th>Nd</th>
+            </tr>
+
+            <tr class="day" style="background-color: beige;">
+                @if (Model.DateTime.FirstOrDefault().DayOfWeek == DayOfWeek.Sunday)
+                {
+                    @for (int i = 1; i < 7; i++)
+                    {
+                        <td style="visibility: hidden;"></td>
+                    }
+                }
+                else
+                {
+                    @for (int i = 1; i < (int)Model.DateTime.FirstOrDefault().DayOfWeek; i++)
+                    {
+                        <td style="visibility: hidden;"></td>
+                    }
+                }
+                    
+                @foreach (var day in Model.DateTime)
+                {
+                    @if (DateTime.Compare(day, DateTime.Today) < 0)
+                    {
+                        <td>
+                            <a class="nav-link text-black bg-black bg-opacity-50" style="pointer-events: none; cursor: default;" asp-controller="Showing" asp-action="ShowTime">@day.ToString("dd")</a>
+                        </td>
+                    }
+                    else if (Model.ShowingModel.Any(x => x.DateTime.Date == day.Date) && DateTime.Compare(day.Date, DateTime.Now.Date) >= 0)
+                    {
+                        <td>
+                            <a class="nav-link text-black bg-opacity-25" style="cursor: pointer; background-color: lightgreen;" onclick="location.href='@Url.Action("ShowTime", "Showing", new { id = Model.ShowingModel.FirstOrDefault().Film_Id, move = @day } )'">@day.ToString("dd")</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <a class="nav-link text-black bg-black bg-opacity-50" style="pointer-events: none; cursor: default;" asp-controller="Showing" asp-action="ShowTime">@day.ToString("dd")</a>
+                        </td>
+                    }
+                }
+                @if (Model.DateTime.LastOrDefault().DayOfWeek == DayOfWeek.Monday)
+                {
+                    @for (int i = 1; i < 7; i++)
+                    {
+                        <td style="visibility: hidden;"></td>
+                    }
+                }
+                else
+                {
+                    @for (int i = 7; i > (int)Model.DateTime.LastOrDefault().DayOfWeek; i--)
+                    {
+                        <td style="visibility: hidden;"></td>
+                    }
+                }
+            </tr>
+            </table>
+
+    </form>
+
+</body>
+</html>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,95 @@
+﻿@model List<LoggingModel>
+
+@{
+    ViewData["Title"] = "Users Management";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+    background-image: linear-gradient(tan, white);
+    }
+
+    .row {
+    display: inline;
+    flex-wrap: wrap;
+    padding: 20px;
+    text-align: center;
+    }
+
+    .column {
+    position: sticky;
+    flex: 33.33%;
+    padding: 5px;
+    }
+
+    .central {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    }
+
+    .table {
+    margin: auto;
+    text-align: center;
+    }
+
+    .image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 550px;
+    overflow: hidden;
+    }
+
+    .text {
+    display: block;
+    font-size: 18px;
+    margin: auto;
+    width: 80%;
+    text-align: center;
+    padding: 30px 0;
+    color: white;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    }
+
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    
+    <table class="table table-bordered border-dark align-middle text-center table-striped">
+        <tr style="background-color: tan;">
+            <th>Login</th>
+            <th>Email</th>
+            <th>Czy jest adminem?</th>
+            <th>Ostatnie logowanie</th>
+            <th>Zarządzanie</th>
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr style="background-color: beige;">
+                <td>@user.Login</td>
+                <td>@user.Email</td>
+                <td>@user.IsAdmin</td>
+                <td>@user.LastLogin</td>
+                <td>
+                    <a asp-action="UpdateUser" asp-controller="AdminPanel" asp-route-id="@user.User_Id">Edytuj</a>
+                    <a asp-action="DeleteUser" asp-controller="AdminPanel" asp-route-id="@user.User_Id">Usuń</a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <br />
+    <div class="row">
+        <div class="column">
+            <a class="btn btn-outline-dark btn-lg" style="background-color: tan;" asp-action="CreateUser" asp-controller="AdminPanel"><b>Dodaj nowego użytkownika</b></a>
+        </div>
+    </div>
+
+</body>
+</html>

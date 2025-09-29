@@ -1,0 +1,86 @@
+﻿@model LoggingModel
+
+@{
+    ViewData["Title"] = "Add User";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+        background-image: linear-gradient(tan, white);
+    }
+
+    .central {
+        margin: auto;
+        width: 80%;
+        text-align: center;
+    }
+
+    .btn-add {
+        width: 30%;
+        display: block;
+        position: sticky;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+        color: white;
+        text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    }
+
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <form asp-controller="AdminPanel" asp-action="CreateUser" method="post">
+
+        <div class="central" style="display: flex; flex-direction: column; gap: 10px;">
+            <h1 class="text-center mb-3"><b>Dodaj nowego użytkownika</b></h1>
+
+            <div>
+                <label asp-for="Login" class="form-label" style="font-size: 20px;">Login:</label>
+                <input asp-for="Login" type="text" />
+                
+            </div>
+            <div class="central text-danger">
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Password" class="form-label" style="font-size: 20px;">Hasło:</label>
+                <input asp-for="Password" type="password" />
+                
+            </div>
+            <div class="central text-danger">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Email" class="form-label" style="font-size: 20px;">Email:</label>
+                <input asp-for="Email" type="email" />
+                
+            </div>
+            <div class="central text-danger">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            
+            <div>
+                <label asp-for="IsAdmin" class="form-label">Admin:</label>
+                <input type="checkbox" name="Admin" value="true" />
+            </div>
+
+            <div class="central">
+                <button class="btn-add btn-dark btn-outline-secondary btn-lg" type="submit"><b>Dodaj</b></button>
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

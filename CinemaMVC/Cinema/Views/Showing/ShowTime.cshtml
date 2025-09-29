@@ -1,0 +1,41 @@
+﻿@model List<ShowingModel>
+@{
+    ViewData["Title"] = "Show Time";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+        background-image: linear-gradient(tan, white);
+    }
+
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h1 class="text-center" style="padding-bottom: 15px;"><b>@Model.First().Films.Name</b></h1>
+    <table class="table table-bordered border-dark align-middle text-center table-striped">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @if (item.DateTime.AddMinutes(20) >= DateTime.Now)
+            {
+                <td><b>@item.DateTime.ToString("T")</b></td>
+                <td>
+                    <a class="btn btn-outline-dark btn-lg" onclick="location.href='@Url.Action("Seats", "Showing", new { hallId = item.CinemaHall_Id, playTime = item.DateTime })'">Wybierz miejsca</a>
+                </td>
+            }
+        </tr>
+    }
+    @if (Model.All(x => x.DateTime.AddMinutes(20) < DateTime.Now))
+    {
+        <tr>Wszystkie dzisiejsze seanse zakończone.</tr>
+    }
+    </table>
+
+</body>
+</html>

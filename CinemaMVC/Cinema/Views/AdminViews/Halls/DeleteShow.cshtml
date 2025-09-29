@@ -1,0 +1,83 @@
+﻿@model List<ShowingModel>
+
+@{
+    ViewData["Title"] = "Cinema Hall Films";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+    background-image: linear-gradient(tan, white);
+    }
+
+    .central {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    }
+
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <form asp-action="CinemaHallDeleteShow" asp-controller="AdminPanel" method="post">
+        <table class="table table-bordered border-dark align-middle text-center table-striped">
+            <tr style="background-color: tan;">
+                <th>Nazwa filmu</th>
+                <th>Godzina</th>
+                <th>Data</th>
+                <th>Zarządzanie</th>
+            </tr>
+            @foreach (var showInHall in Model)
+            {
+                @if (showInHall.DateTime < DateTime.Now.Date )
+                {
+                    <tr style="color: red; font-weight: bold;">
+                        <input type="hidden" name="toDelete" value="@showInHall.Showing_Id" />
+                        <td>@showInHall.Films.Name</td>
+                        <td>@showInHall.DateTime.TimeOfDay</td>
+                        <td>@showInHall.DateTime.ToString("yyyy-MM-dd")</td>
+                        <td>
+                            <a asp-action="UpdateShow" asp-controller="AdminPanel" asp-route-id="@showInHall.Showing_Id">Edytuj</a>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr style="background-color: beige;">
+                        <td>@showInHall.Films.Name</td>
+                        <td>@showInHall.DateTime.TimeOfDay</td>
+                        <td>@showInHall.DateTime.ToString("yyyy-MM-dd")</td>
+                        <td>
+                            <a asp-action="UpdateShow" asp-controller="AdminPanel" asp-route-id="@showInHall.Showing_Id">Edytuj</a>
+                        </td>
+                    </tr>
+                }
+
+            }
+        </table>
+
+        <div class="central" style="font-size: 20px;">
+            <div class="text-black"><b>Czy chcesz usunąć przedawnione seanse?</b></div>
+            <input type="hidden" name="id" value="@Model.FirstOrDefault().CinemaHall_Id" />
+            <br />
+            <div class="text-black"> (Oznaczone kolorem <b style="color: red;">czerwonym</b>)</div>
+            <br />
+            <button class="btn btn-danger btn-lg" type="submit"><b>Usuń</b></button>
+            <a class="btn btn-success btn-lg" asp-action="CreateShow" asp-controller="AdminPanel" asp-route-id="@Model.FirstOrDefault().CinemaHall_Id">Dodaj</a>
+        </div>
+
+        <div class="central">
+            @if (TempData["Message"] != null)
+            {
+                <br />
+                <div class="alert-danger">@TempData["Message"]</div>
+            }
+        </div>
+    </form>
+
+</body>
+</html>

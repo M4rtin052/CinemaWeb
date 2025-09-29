@@ -1,0 +1,137 @@
+﻿@model FilmInformationModel
+
+@{
+    ViewData["Title"] = "Add film";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+        background-image: linear-gradient(tan, white);
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+
+    .column {
+        position: sticky;
+        flex: 33.33%;
+        padding: 5px;
+    }
+
+    .central {
+        margin: auto;
+        width: 50%;
+        text-align: center;
+    }
+
+    .btn-add {
+        width: 30%;
+        display: block;
+        position: sticky;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+        color: white;
+        text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    }
+
+    .text {
+        font-size: 20px;
+    }
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <form asp-controller="AdminPanel" asp-action="CreateFilm" method="post">
+
+        <div class="central" style="display: flex; flex-direction: column; gap: 10px;">
+            <h1 class="text-center"><b>Dodaj nowy film</b></h1>
+
+            <div>
+                <label asp-for="Name" class="control-label text">Nazwa:</label>
+                <input asp-for="Name" class="form-control" type="text" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Category" class="control-label text">Kategoria:</label>
+                <input asp-for="Category" class="form-control" type="text" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Age_category" class="control-label text">Kategoria wiekowa:</label>
+                <input asp-for="Age_category" class="form-control" type="text" />
+                <span asp-validation-for="Age_category" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Duration" class="control-label text">Czas trwania:</label>
+                <input asp-for="Duration" class="form-control" type="text" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Description" class="control-label text">Opis:</label>
+                <textarea asp-for="Description" class="form-control" type="text" rows="5"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Cast" class="control-label text">Obsada:</label>
+                <textarea asp-for="Cast" class="form-control" type="text" rows="5"></textarea>
+                <span asp-validation-for="Cast" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Director" class="control-label text">Reżyser:</label>
+                <input asp-for="Director" class="form-control" type="text" />
+                <span asp-validation-for="Director" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Production" class="control-label text">Miejsca produkcji:</label>
+                <input asp-for="Production" class="form-control" type="text" />
+                <span asp-validation-for="Production" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Release_date" class="control-label text">Rok produkcji:</label>
+                <input asp-for="Release_date" class="form-control central" type="date" />
+                <span asp-validation-for="Release_date" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="MainPicture" class="control-label text">Główny obraz:</label>
+                <input asp-for="MainPicture" class="form-control central" type="file" accept="image/*" />
+                <span asp-validation-for="MainPicture" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="BackgroundPicture" class="control-label text">Tło:</label>
+                <input asp-for="BackgroundPicture" class="form-control central" type="file" accept="image/*" />
+                <span asp-validation-for="BackgroundPicture" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <button class="btn-add btn-dark btn-outline-secondary btn-lg" type="submit">Dodaj</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

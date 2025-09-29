@@ -1,0 +1,126 @@
+﻿@model FilmInformationModel
+
+@{
+    ViewData["Title"] = "Description";
+}
+
+<!DOCTYPE html>
+<style>
+    .bg-img {
+        background-image: url("@ViewBag.PictureBG");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    filter: blur(5px);
+    
+    position: fixed;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    z-index: -1;
+    }
+
+    .row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    }
+
+    .column {
+        display: flex;
+        flex-wrap: wrap;
+    flex: 33.33%;
+    }
+
+    .image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 550px;
+    overflow: hidden;
+    }
+
+    .btn-buy {
+    z-index: 1;
+    height: 55%;
+    width: 73%;
+    margin-left: auto;
+    margin-right: auto;
+
+    }
+    .text {
+    display: block;
+    color: white;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    }
+
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="bg-img"></div>
+    <div class="row">
+        <div class="column border border-secondary">
+            <div class="text text-white">
+                <h1 class="text-lg-center">
+                    <b>@Model.Name</b>
+                </h1>
+                <p>
+                    <h5>Kategoria:</h5>
+                    @Model.Category
+                </p>
+                <p>
+                    <h5>Kategoria wiekowa:</h5>
+                    @Model.Age_category
+                </p>
+                <p>
+                    <h5>Czas trwania:</h5>
+                    @Model.Duration
+                </p>
+                <p>
+                    <h5>Opis:</h5>
+                    @Model.Description
+                </p>
+                <p>
+                    <h5>Obsada:</h5>
+                    @Model.Cast
+                </p>
+                <p>
+                    <h5>Reżyser:</h5>
+                    @Model.Director
+                </p>
+                <p>
+                    <h5>Miejsca produkcji:</h5>
+                    @Model.Production
+                </p>
+                <p>
+                    <h5>Rok produkcji:</h5>
+                    @Model.Release_date
+                </p>
+            </div>
+        </div>
+
+        <div class="d-grid gap-0 col-5 mx-auto">
+            <img class="image img-fluid" src="~/Pictures/@ViewBag.PictureMain">
+            @* Warunek sprawdzający, czy użytkownik jest zalogowany *@
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-buy btn-dark btn-outline-secondary btn-lg text-white" 
+                onclick="location.href='@Url.Action("Callendar", "Callendar", new { id = Model.Film_Id })'">Kup bilet</a>
+            }
+            else
+            {
+                <a class="btn btn-buy btn-dark btn-outline-secondary btn-lg text-white" 
+                asp-controller="Login" asp-action="Login">Zaloguj się, by kupić bilet</a>
+            }
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+﻿@model List<FilmInformationModel>
+
+@{
+    ViewData["Title"] = "Films Management";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+        background-image: linear-gradient(tan, white);
+    }
+
+    .central {
+        margin: auto;
+        width: 50%;
+        text-align: center;
+    }
+
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <table class="table table-bordered border-dark align-middle text-center table-striped">
+        <tr style="background-color: tan;">
+            <th>Numer filmu</th>
+            <th>Nazwa</th>
+            <th>Kategoria</th>
+            <th>Kategoria wiekowa</th>
+            <th>Czas trwania</th>
+            <th>Opis</th>
+            <th>Obsada</th>
+            <th>Reżyser</th>
+            <th>Miejsca produkcji</th>
+            <th>Rok produkcji</th>
+            <th>Zarządzanie</th>
+        </tr>
+        @foreach (var film in Model)
+        {
+            <tr style="background-color: beige;">
+                <th class="table-active" style="background-color: #e3cfb5;">@film.Film_Id</th>
+                <td>@film.Name</td>
+                <td>@film.Category</td>
+                <td>@film.Age_category</td>
+                <td>@film.Duration</td>
+                <td>@film.Description</td>
+                <td>@film.Cast</td>
+                <td>@film.Director</td>
+                <td>@film.Production</td>
+                <td>@film.Release_date</td>
+                <td>
+                    <a asp-action="UpdateFilm" asp-controller="AdminPanel" asp-route-id="@film.Film_Id">Edytuj</a>
+                    <a asp-action="DeleteFilm" asp-controller="AdminPanel" asp-route-id="@film.Film_Id">Usuń</a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <br />
+    <div class="central">
+        <a class="btn btn-outline-dark btn-lg" style="background-color: tan;" asp-action="CreateFilm" asp-controller="AdminPanel"><b>Dodaj nowy film</b></a>
+    </div>
+
+</body>
+</html>

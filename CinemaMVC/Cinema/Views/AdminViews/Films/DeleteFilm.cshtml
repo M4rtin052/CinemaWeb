@@ -1,0 +1,69 @@
+﻿@model FilmInformationModel
+
+@{
+    ViewData["Title"] = "Delete Film";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+        background-image: linear-gradient(tan, white);
+    }
+
+    .central {
+        margin: auto;
+        width: 50%;
+        text-align: center;
+    }
+
+    .table {
+        margin: auto;
+        text-align: center;
+    }
+
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <form asp-action="DeleteFilm" asp-controller="AdminPanel" method="post">
+        <table class="table table-bordered border-dark align-middle text-center">
+            <tr style="background-color: tan;">
+                <th>Numer filmu</th>
+                <th>Nazwa</th>
+                <th>Kategoria</th>
+                <th>Kategoria wiekowa</th>
+                <th>Czas trwania</th>
+                <th>Opis</th>
+                <th>Obsada</th>
+                <th>Reżyser</th>
+                <th>Miejsca produkcji</th>
+                <th>Rok produkcji</th>
+            </tr>
+            <tr style="background-color: beige;">
+                <th class="table-active" style="background-color: #e3cfb5;">@Model.Film_Id</th>
+                <td>@Model.Name</td>
+                <td>@Model.Category</td>
+                <td>@Model.Age_category</td>
+                <td>@Model.Duration</td>
+                <td>@Model.Description</td>
+                <td>@Model.Cast</td>
+                <td>@Model.Director</td>
+                <td>@Model.Production</td>
+                <td>@Model.Release_date</td>
+            </tr>
+        </table>
+
+        <div class="central">
+            <br />
+            <div class="text-danger" style="font-size: 20px;"><b>Czy na pewno chcesz usunąć ten film?</b></div>
+            <input asp-for="Film_Id" type="hidden" />
+            <br />
+            <button class="btn-danger btn-lg" type="submit"><b>Usuń</b></button>
+        </div>
+
+    </form>
+</body>
+</html>

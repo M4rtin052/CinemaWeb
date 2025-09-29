@@ -1,0 +1,139 @@
+﻿@model List<SeatsModel>
+
+@{
+    ViewData["Title"] = "Seats";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+    background-image: linear-gradient(tan, white);
+    }
+
+    .central {
+    margin: auto;
+    width: 20%;
+    }
+
+    .row {
+    display: inline;
+    flex-wrap: wrap;
+    padding: 20px;
+    text-align: center;
+    }
+
+    .column {
+    position: sticky;
+    flex: 33.33%;
+    padding: 5px;
+    }
+
+    .seats {
+    display: inline;
+    flex-wrap: wrap;
+    padding: 20px;
+    text-align: center;
+    }
+
+    .box-input {
+    display: none;
+    }
+
+    .box-label {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-color: gray;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    }
+
+    .box-input:checked + .box-label {
+    background-color: lightgreen;
+    }
+
+    .selected {
+    display: none;
+    }
+
+    .selected:checked + .box-label {
+    background-color: lightcoral;
+    }
+
+    .screen {
+    margin: auto;
+    width: 50%;
+    height: 100px;
+    background-color: antiquewhite;
+    border: 3px solid black;
+    padding: 10px;
+    }
+
+    .stand {
+    margin: auto;
+    width: 55%;
+    height: 10px;
+    background-color: gray;
+    }
+
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <form action="@Url.Action("Summary", "Showing", new { hallId = Model.Select(x => x.CinemaHall_Id).FirstOrDefault(), playTime = Model.Select(x => x.CinemaHall.Showing.Select(x => x.DateTime)).FirstOrDefault() })" method="post">
+
+        <div class="row">
+            <div class="screen"></div>
+            <div class="stand"></div>
+        </div>
+
+
+        <div class="seats">
+            @foreach (var rows in Model.GroupBy(x => x.Row))
+            {
+                <div class="column">
+                    Rząd: @rows.Key
+                    @foreach (var seats in rows)
+                    {
+                        @if (seats.Seats_Id == seats.Tickets.Select(x => x.Seats_Id).FirstOrDefault())
+                        {
+                            <input type="checkbox" id="@seats.Seats_Id" value="@seats.Seats_Id" class="selected" checked disabled />
+                            <label for="@seats.Seats_Id" class="box-label">@seats.Seat</label>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="@seats.Seats_Id" name="selectedSeats" value="@seats.Seats_Id" class="box-input" />
+                            <label for="@seats.Seats_Id" class="box-label">@seats.Seat</label>
+                        }
+                    }
+                </div>
+            }
+
+        </div>
+
+        <ul class="central">
+            <li class="text-black" style="background-color: gray; color: gray;">Miejsca dostępne</li>
+            <br />
+            <li class="text-black" style="background-color: lightgreen; color: lightgreen;">Miejsca wybrane</li>
+            <br />
+            <li class="text-black" style="background-color: lightcoral; color: lightcoral;">Miejsca zajęte</li>
+            <br />
+            @if (!User.IsInRole("Administrator"))
+            {
+                <button class="btn" type="submit"><b>Dalej</b></button>
+            }
+
+        </ul>
+
+    </form>
+
+</body>
+</html>

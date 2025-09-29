@@ -1,0 +1,89 @@
+﻿@model LoggingModel
+
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+        background-image: linear-gradient(tan, white);
+    }
+
+    .row {
+        display: inline;
+        flex-wrap: wrap;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .column {
+        position: sticky;
+        flex: 33.33%;
+        padding: 5px;
+    }
+
+    .central {
+        margin: auto;
+        width: 50%;
+        text-align: center;
+    }
+
+    .table {
+        margin: auto;
+        text-align: center;
+    }
+
+    .image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        height: 550px;
+        overflow: hidden;
+    }
+
+    .text {
+        display: block;
+        font-size: 18px;
+        margin: auto;
+        width: 80%;
+        text-align: center;
+        padding: 30px 0;
+        color: white;
+        text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    }
+
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <form asp-action="DeleteUser" asp-controller="AdminPanel" method="post">
+        <table class="table table-bordered border-dark align-middle text-center table-striped">
+            <tr style="background-color: tan;">
+                <th>Login</th>
+                <th>Email</th>
+                <th>Czy jest adminem?</th>
+                <th>Ostatnie logowanie</th>
+            </tr>
+            <tr style="background-color: beige;">
+                <td>@Model.Login</td>
+                <td>@Model.Email</td>
+                <td>@Model.IsAdmin</td>
+                <td>@Model.LastLogin</td>
+            </tr>
+        </table>
+
+        <div class="central">
+            <br />
+            <div class="text-danger" style="font-size: 20px;"><b>Czy na pewno chcesz usunąć tego użytkownika?</b></div>
+            <input asp-for="User_Id" type="hidden" />
+            <br />
+            <button class="btn-danger btn-lg" type="submit"><b>Usuń</b></button>
+        </div>
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,107 @@
+﻿@model List<CinemaHallModel>
+
+@{
+    ViewData["Title"] = "Cinema Halls Management";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+    background-image: linear-gradient(tan, white);
+    }
+
+    .central {
+    margin: auto;
+    width: 20%;
+    }
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+    <table class="table table-bordered border-dark align-middle text-center table-striped">
+        <tr style="background-color: tan;">
+            <th>Numer sali</th>
+            <th>Temperatura</th>
+            <th>Oświetlenie</th>
+        </tr>
+        @foreach (var hallNumber in Model)
+        {
+            <tr style="background-color: beige;">
+                <th>
+                    <a class="btn btn-outline-dark btn-lg" asp-action="DeleteShow" asp-controller="AdminPanel" asp-route-id="@hallNumber.CinemaHall_Id">
+                    @hallNumber.HallNumber</a>
+                </th>
+                <th>@hallNumber.Temperature &deg;C</th>
+                @if (hallNumber.Showing.Select(x => x.DateTime.Date == DateTime.Now.Date).Any() == true)
+                {
+                    @if (hallNumber.Lightening.Trim() == "Jasno")
+                    {
+                        @if (hallNumber.Showing.Any(x => x.DateTime.ToShortDateString() == DateTime.Today.ToShortDateString() 
+                        && x.DateTime.AddMinutes(-5) <= DateTime.Now && x.DateTime.AddHours(3) >= DateTime.Now))
+                        {
+                            <th class="text-black" style="background-color: lightcoral; color: lightcoral;">
+                                @hallNumber.Lightening
+                                <p>Zgaś światła</p>
+                                <p class="text-danger">(Trwa seans)</p>
+                            </th>
+                        }
+                        else
+                        {
+                            <th class="text-black" style="background-color: lightgreen; color: lightgreen;">
+                                @hallNumber.Lightening
+                                <p class="text-danger">(Brak trwającego seansu)</p>
+                            </th>
+                        }
+                    }
+                    else if (hallNumber.Lightening.Trim() == "Ciemno")
+                    {
+                        @if (hallNumber.Showing.Any(x => x.DateTime.ToShortDateString() == DateTime.Today.ToShortDateString() && x.DateTime.AddHours(3) >= DateTime.Now && x.DateTime < DateTime.Now))
+                        {
+                            <th class="text-black" style="background-color: lightgray; color: lightgray;">
+                                @hallNumber.Lightening
+                                <p class="text-danger">(Trwa seans)</p>
+                            </th>
+                        }
+                        else
+                        {
+                            <th class="text-black" style="background-color: lightcoral; color: lightcoral;">
+                                @hallNumber.Lightening
+                                <p>Zapal światła</p>
+                                <p class="text-danger">(Brak trwającego seansu)</p>
+                            </th>
+                        }
+
+                    }
+                    else
+                    {
+                        @if (hallNumber.Showing.Any(x => x.DateTime.ToShortDateString() == DateTime.Today.ToShortDateString() && x.DateTime.AddHours(3) >= DateTime.Now && x.DateTime < DateTime.Now))
+                        {
+                            <th class="text-black" style="background-color: grey; color: grey;">
+                                @hallNumber.Lightening
+                                <p class="text-danger">(Trwa seans)</p>
+                            </th>
+                        }
+                        else
+                        {
+                            <th class="text-black" style="background-color: lightcoral; color: lightcoral;">
+                                @hallNumber.Lightening
+                                <p>Zapal światła</p>
+                                <p class="text-danger">(Brak trwającego seansu)</p>
+                            </th>
+                        }
+                    }
+                }
+                else
+                {
+                    <th class="text-black" style="background-color: lightslategray; color: lightslategray;">Brak dziś seansów na tej sali.</th>
+                }
+            </tr>
+        }
+    </table>
+
+</body>
+</html>

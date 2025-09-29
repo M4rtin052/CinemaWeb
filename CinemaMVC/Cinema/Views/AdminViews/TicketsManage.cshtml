@@ -1,0 +1,75 @@
+﻿@model List<TicketsModel>
+@{
+    ViewData["Title"] = "Tickets Manage";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+    background-image: linear-gradient(tan, white);
+    }
+
+    .central {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    }
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <form asp-action="Tickets" asp-controller="AdminPanel" method="post">
+        <h1 class="text-center" style="padding-bottom: 15px;"><b>Kupione bilety</b></h1>
+        <table class="table table-bordered border-dark align-middle text-center table-striped">
+            <tr>
+                <th>Numer biletu</th>
+                <th>Bilet użytkownika</th>
+                <th>Data seansu</th>
+                <th>Godzina seansu</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                @if (item.Showing.DateTime < DateTime.Now.Date)
+                {
+                    <tr style="color: red; font-weight: bold;">
+                        <input type="hidden" name="toDelete" value="@item.Ticket_Id" />
+                        <td><b>@item.Ticket_Id</b></td>
+                        <td>@item.Logging.Login</td>
+                        <td>@item.Showing.DateTime.ToString("d")</td>
+                        <td>@item.Showing.DateTime.ToString("T")</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr style="background-color: beige;">
+                        <td><b>@item.Ticket_Id</b></td>
+                        <td>@item.Logging.Login</td>
+                        <td>@item.Showing.DateTime.ToString("d")</td>
+                        <td>@item.Showing.DateTime.ToString("T")</td>
+                    </tr>
+                }
+            }
+
+    </table>
+
+        <div class="central" style="font-size: 20px;">
+            <div class="text-black"><b>Czy chcesz usunąć przedawnione bilety?</b></div>
+            <br />
+            <div class="text-black"> (Oznaczone kolorem <b style="color: red;">czerwonym</b>)</div>
+            <br />
+            <button class="btn-danger btn-lg" type="submit"><b>Usuń</b></button>
+        </div>
+
+        <div class="central">
+            @if (TempData["Message"] != null)
+            {
+                <br />
+                <div class="alert-danger">@TempData["Message"]</div>
+            }
+        </div>
+    </form>
+</body>
+</html>

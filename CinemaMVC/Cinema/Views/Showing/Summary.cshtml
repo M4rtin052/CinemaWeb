@@ -1,0 +1,87 @@
+﻿@model List<SeatsModel>
+
+@{
+    ViewData["Title"] = "Summary";
+}
+
+<!DOCTYPE html>
+<style>
+    body {
+        background-image: linear-gradient(tan, white);
+    }
+
+    .central {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    }
+
+    .table {
+    margin: auto;
+    text-align: center;
+    }
+
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <form asp-controller="Home" asp-action="SaveTicket" method="post">
+        
+        <div class="central">
+            <h3 class="fw-bold">Wybrany seans: </h3>
+            <p class="fs-5">@Model.Select(x => x.CinemaHall.Showing.Select(x => x.Films.Name.ToString()).FirstOrDefault()).FirstOrDefault()</p>
+        </div>
+
+        <div class="central">
+            <h4 class="fw-bold">Data: </h4>
+            <p class="fs-6">@Model.Select(x => x.CinemaHall.Showing.Select(x => x.DateTime.ToShortDateString()).FirstOrDefault()).FirstOrDefault()</p>
+        </div>
+
+        <div class="central">
+            <h4 class="fw-bold">Godzina: </h4>
+            <p class="fs-6">@Model.Select(x => x.CinemaHall.Showing.Select(x => x.DateTime.ToShortTimeString()).FirstOrDefault()).FirstOrDefault()</p>
+        </div>
+
+        <table class="table">
+            <tr style="background-color: tan;">
+                <th class="fs-5">Rząd</th>
+                <th class="fs-5">Miejsce</th>
+                <th class="fs-5">Zniżka</th>
+            </tr>
+            @* pętla do wyświetlania informacji z modelu przekazanego przez kontroler do widoku *@
+            @foreach (var seat in Model)
+            {
+                <tr style="background-color: beige;"> @* nowy rząd tabeli *@
+                    @* nieklikalne elementy input, służące do przekazywania informacji przez formularz *@
+                    <input id="@seat.Seats_Id" name="selectedSeats" value="@seat.Seats_Id" style="display: none;"/>
+                    <input id="@seat.Seats_Id" name="selectedDate" 
+                    value="@Model.Select(x => x.CinemaHall.Showing.Select(x => x.DateTime).FirstOrDefault()).FirstOrDefault()" 
+                    style="display: none;" />
+                    @* zapisanie niepogrubionym tekstem rzędu i kolumny miejsca *@
+                    <td>@seat.Row</td>
+                    <td>@seat.Seat</td>
+                    @* pole wyboru zniżki na dane miejsce *@
+                    <td><input type="checkbox" id="@seat.Seats_Id" name="discount" value="@seat.Seats_Id" /></td>
+                </tr>
+            }
+        </table>
+
+        <div class="central fs-5">
+            <br />
+            <p>Cena bez zniżki: <b>25 zł</b></p>
+            <p>Cena ze zniżką: <b>20 zł</b></p>
+            <p class="text-danger fw-bold">Ze zniżki mogą skorzystać tylko uczniowie, studenci oraz seniorzy.</p>
+        </div>
+        
+        <div class="central">
+            <br />
+            <button class="btn-success btn-lg" type="submit"><b>Finalizuj zakup</b></button>
+        </div>
+
+    </form>
+
+</body>
+</html>
